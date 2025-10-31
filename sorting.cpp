@@ -1,21 +1,25 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 class BubbleSorter {
 private:
-    vector<int> arr;
+    int arr[100];  // fixed-size array
+    int size;      // actual number of elements
 
 public:
-    BubbleSorter(const vector<int>& inputArr) : arr(inputArr) {}
+    BubbleSorter(int inputArr[], int n) {
+        size = n;
+        for (int i = 0; i < n; ++i)
+            arr[i] = inputArr[i];
+    }
 
     void sort() {
-        int n = arr.size();
         bool swapped;
 
-        for (int i = 0; i < n - 1; ++i) {
+        for (int i = 0; i < size - 1; ++i) {
             swapped = false;
 
-            for (int j = 0; j < n - i - 1; ++j) {
+            for (int j = 0; j < size - i - 1; ++j) {
                 if (arr[j] > arr[j + 1]) {
                     swap(arr[j], arr[j + 1]);
                     swapped = true;
@@ -23,18 +27,14 @@ public:
             }
 
             if (!swapped)
-                break;
+                break;  // optimization: stop if array already sorted
         }
     }
 
     void display() const {
-        for (int x : arr)
-            cout << x << " ";
+        for (int i = 0; i < size; ++i)
+            cout << arr[i] << " ";
         cout << "\n";
-    }
-
-    vector<int> getArray() const {
-        return arr;
     }
 };
 
@@ -43,16 +43,22 @@ int main() {
     cout << "Enter the number of elements: ";
     cin >> n;
 
-    vector<int> arr(n);
+    if (n > 100) {
+        cout << "Maximum array size is 100.\n";
+        return 1;
+    }
+
+    int arr[100];
     cout << "Enter " << n << " elements: ";
     for (int i = 0; i < n; ++i)
         cin >> arr[i];
 
     cout << "\nOriginal array: ";
-    for (int x : arr) cout << x << " ";
+    for (int i = 0; i < n; ++i)
+        cout << arr[i] << " ";
     cout << "\n";
 
-    BubbleSorter sorter(arr);
+    BubbleSorter sorter(arr, n);
     sorter.sort();
 
     cout << "Sorted array:   ";
