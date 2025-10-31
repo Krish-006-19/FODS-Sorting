@@ -1,37 +1,62 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void bubbleSort(vector<int>& arr) {
-    int n = arr.size();
-    bool swapped;
+class BubbleSorter {
+private:
+    vector<int> arr;
 
-    for (int i = 0; i < n - 1; ++i) {
-        swapped = false;
+public:
+    BubbleSorter(const vector<int>& inputArr) : arr(inputArr) {}
 
-        for (int j = 0; j < n - i - 1; ++j) {
-            if (arr[j] > arr[j + 1]) {
-                swap(arr[j], arr[j + 1]);
-                swapped = true;
+    void sort() {
+        int n = arr.size();
+        bool swapped;
+
+        for (int i = 0; i < n - 1; ++i) {
+            swapped = false;
+
+            for (int j = 0; j < n - i - 1; ++j) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr[j], arr[j + 1]);
+                    swapped = true;
+                }
             }
-        }
 
-        if (!swapped)
-            break;
+            if (!swapped)
+                break;
+        }
     }
-}
+
+    void display() const {
+        for (int x : arr)
+            cout << x << " ";
+        cout << "\n";
+    }
+
+    vector<int> getArray() const {
+        return arr;
+    }
+};
 
 int main() {
-    vector<int> arr = {5, 1, 4, 2, 8};
+    int n;
+    cout << "Enter the number of elements: ";
+    cin >> n;
 
-    cout << "Original array: ";
+    vector<int> arr(n);
+    cout << "Enter " << n << " elements: ";
+    for (int i = 0; i < n; ++i)
+        cin >> arr[i];
+
+    cout << "\nOriginal array: ";
     for (int x : arr) cout << x << " ";
     cout << "\n";
 
-    bubbleSort(arr);
+    BubbleSorter sorter(arr);
+    sorter.sort();
 
     cout << "Sorted array:   ";
-    for (int x : arr) cout << x << " ";
-    cout << "\n";
+    sorter.display();
 
     return 0;
 }
